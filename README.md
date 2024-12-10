@@ -22,7 +22,7 @@ xtiled level.png level.tmj
 This command processes the level.png image, generates a tileset and map data, and saves them as a level.tmj file.
 
 Requirements
-    •    A tile-based input image (e.g., PNG or JPEG).
+    •    A tile-based input image (e.g., PNG).
     •    Compatible with standard TMJ file specifications.
 
 Why Use This Tool?
