@@ -99,7 +99,7 @@ static void appendTileToTileset(const TImage* tile, const TImage* tileset) {
 
 //MARK: - xTiled Method/s
 
-void xTiled::saveAs(std::string& filename) {
+void xTiled::createTMJFile(std::string& filename) {
     std::ofstream outfile;
     
     
@@ -158,7 +158,6 @@ void xTiled::saveAs(std::string& filename) {
     tmj = regex_replace(tmj, std::regex(R"(@image)"), removePath(removeExtension(filename)) + ".png");
     tmj = regex_replace(tmj, std::regex(R"(@name)"), removePath(removeExtension(filename)));
     
-    int columnCount = (int)ceil(sqrt((double)tileCount));
     
     tmj = regex_replace(tmj, std::regex(R"(@width)"), std::to_string(_tiledImage->width / tileWidth));
     tmj = regex_replace(tmj, std::regex(R"(@height)"), std::to_string(_tiledImage->height / tileHeight));
@@ -198,7 +197,7 @@ void xTiled::saveAs(std::string& filename) {
     delete [] arr;
 }
 
-void xTiled::generateTiledData(void) {
+void xTiled::generateTMJData(void) {
     int columnCount = (int)ceil(sqrt((double)tileCount));
     _tileset = createPixmap(tileWidth * columnCount, tileHeight * columnCount, _tiledImage->bitWidth);
     

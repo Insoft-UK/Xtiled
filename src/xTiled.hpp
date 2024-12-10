@@ -46,8 +46,8 @@ public:
         _tiledImage = loadPNGGraphicFile(imagefile);
     }
     
-    void saveAs(std::string& filename);
-    void generateTiledData(void);
+    void createTMJFile(std::string& filename);
+    void generateTMJData(void);
     
 private:
     TImage* _tiledImage = nullptr;

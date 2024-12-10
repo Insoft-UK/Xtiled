@@ -246,8 +246,8 @@ int main(int argc, const char * argv[])
     }
     
     
-    xtiled.generateTiledData();
-    xtiled.saveAs(out_filename);
+    xtiled.generateTMJData();
+    xtiled.createTMJFile(out_filename);
     
     
     return 0;

@@ -5,7 +5,5 @@
 **Command Line Tool**
 
 
-
-
 > [!NOTE]
 The only image file format currently supported by this utility tool is the Portable Network Graphic (PNG) format.
