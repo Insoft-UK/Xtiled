@@ -1,0 +1,6 @@
+*.xcworkspace/xcuserdata/
+xcuserdata/
+.DS_Store
+bin/*
+*.zip
+www
