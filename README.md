@@ -29,7 +29,5 @@ Why Use This Tool?
 
 This tool streamlines the workflow of creating TMJ files directly from graphical assets, eliminating manual tileset creation and enabling faster iteration for developers and designers.
 
-This description is structured, informative, and suitable for a GitHub README, emphasizing the tool’s purpose, features, and usage.
-
 > [!NOTE]
 The only image file format currently supported by this utility tool is the Portable Network Graphic (PNG) format.
