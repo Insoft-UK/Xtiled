@@ -69,7 +69,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-w 8 -h 8"
+            argument = "-w 8 -h 8 -s 0.95 -c 576"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

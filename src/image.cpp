@@ -724,7 +724,7 @@ float compareSubImageSimilarity(const TImage* imageA, int x, int y, const TImage
     }
     
     float similarityPercentage;
-    int lengthInBytes = imageB->width * imageA->height * bytesPerPixel;
+    int lengthInBytes = imageB->width * imageB->height * bytesPerPixel;
     similarityPercentage = (float)matchCount / (float)lengthInBytes;
     
     return similarityPercentage;

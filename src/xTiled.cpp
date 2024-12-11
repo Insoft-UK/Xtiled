@@ -63,7 +63,7 @@ static void extractTileFromImage(const TImage* dstImage, const TImage* srcImage,
     copyPixmap(dstImage, 0, 0, srcImage, x, y, w, h);
 }
 
-static int findTileUID(const TImage* tileset, const TImage* tile) {
+static int findTileUID(const TImage* tileset, const TImage* tile, float similarityPercentage) {
     int w = tile->width;
     int h = tile->height;
     
@@ -71,7 +71,7 @@ static int findTileUID(const TImage* tileset, const TImage* tile) {
     
     for (int y = 0; y < tileset->height; y += h) {
         for (int x = 0; x < tileset->width; x += w) {
-            if (compareSubImage(tileset, x, y, tile)) {
+            if (compareSubImageSimilarity(tileset, x, y, tile) >= similarityPercentage) {
                 return uid;
             }
             uid++;
@@ -146,7 +146,7 @@ void xTiled::createTMJFile(std::string& filename) {
             "tilecount":@tilesets.tilecount,
             "tileheight":@tilewidth,
             "tilewidth":@tilewidth,
-            "transparentcolor":"#ff00ff"
+            "transparentcolor":"@tileset.transparentcolor"
         }
     ],
     "tilewidth":@tilewidth,
@@ -166,6 +166,7 @@ void xTiled::createTMJFile(std::string& filename) {
     tmj = regex_replace(tmj, std::regex(R"(@tilesets\.imagewidth)"), std::to_string(_tileset->width));
     tmj = regex_replace(tmj, std::regex(R"(@tilesets\.imageheight)"), std::to_string(_tileset->height));
     tmj = regex_replace(tmj, std::regex(R"(@tilesets\.tilecount)"), std::to_string(tileCount));
+    tmj = regex_replace(tmj, std::regex(R"(@tilesets\.transparentcolor)"), std::to_string(transparentColor));
     
     tmj = regex_replace(tmj, std::regex(R"(@layers\.width)"), std::to_string(_tiledImage->width / tileWidth));
     tmj = regex_replace(tmj, std::regex(R"(@layers\.height)"), std::to_string(_tiledImage->height / tileHeight));
@@ -226,7 +227,7 @@ void xTiled::generateTMJData(void) {
     for (int y = 0; y < _tiledImage->height; y += tileHeight) {
         for (int x = 0; x < _tiledImage->width; x += tileWidth) {
             extractTileFromImage(tile, _tiledImage, x, y, tileWidth, tileHeight);
-            uid = findTileUID(_tileset, tile);
+            uid = findTileUID(_tileset, tile, this->similarityPercentage);
             if (uid == -1) {
                 if (_tileCount < tileCount) {
                     appendTileToTileset(tile, _tileset);

@@ -110,12 +110,13 @@ void help(void)
     std::cout << "Copyright (C) 2024 Insoft. All rights reserved.\n";
     std::cout << "Insoft xTiled version, " << BUILD_NUMBER / 100000 << "." << BUILD_NUMBER / 10000 % 10 << (rev ? "." + std::to_string(rev) : "")
     << " (BUILD " << getBuildCode() << "-" << decimalToBase24(BUILD_DATE) << ")\n\n";
-    std::cout << "Usage: repix <input-file> [-o <output-file>] [-w <width>] [-h <height>] [-t <tilecount>]\n\n";
+    std::cout << "Usage: repix <input-file> [-o <output-file>] [-w <width>] [-h <height>] [-t <tilecount>] [-s <similarity>]\n\n";
     std::cout << "Options:\n";
     std::cout << "    -o  <output-file>        Specify the filename for Tiled file.\n";
-    std::cout << "    -w  <width>              Specifying the width of the tiles used.\n";
-    std::cout << "    -h  <height>             Specifying the height of the tiles used.\n";
-    std::cout << "    -t  <tilecount>          Specifying the number of tiles used.\n";
+    std::cout << "    -w  <width>              Specify the width of the tiles used.\n";
+    std::cout << "    -h  <height>             Specify the height of the tiles used.\n";
+    std::cout << "    -c  <tilecount>          Specify the number of tiles used.\n";
+    std::cout << "    -s  <similarity>         Specify similarity percentage of tiles for matching.\n";
     std::cout << "\n";
     std::cout << "Additional Commands:\n";
     std::cout << "  xtiled {-version | -help}\n";
@@ -204,9 +205,15 @@ int main(int argc, const char * argv[])
                 continue;
             }
             
-            if (args == "-t") {
+            if (args == "-c") {
                 if (++n > argc) error();
                 xtiled.tileCount = atoi(argv[n]);
+                continue;
+            }
+            
+            if (args == "-s") {
+                if (++n > argc) error();
+                xtiled.similarityPercentage = atof(argv[n]);
                 continue;
             }
             

@@ -32,6 +32,8 @@ public:
     unsigned tileWidth = 0;
     unsigned tileHeight = 0;
     unsigned tileCount = 2048;
+    float similarityPercentage = 1.0;
+    uint32_t transparentColor = 0;
     
     ~xTiled() {
         reset(_tiledImage);
