@@ -13,11 +13,11 @@ Usage
 
 Run the tool via the command line, specifying the input image and output file:
 
-xtiled input-image.png output-file.tmj
+xtiled input-image.png -o output-file.tmj
 
 Example
 
-xtiled level.png level.tmj
+xtiled level.png -o level.tmj
 
 This command processes the level.png image, generates a tileset and map data, and saves them as a level.tmj file.
 
