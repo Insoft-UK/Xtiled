@@ -1,26 +1,24 @@
-/*
- The MIT License (MIT)
- 
- Copyright (c) 2024 Insoft. All rights reserved.
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2024-2025 Insoft.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 #include <stdio.h>
 #include <stdint.h>
@@ -28,9 +26,13 @@
 #include <fstream>
 #include <array>
 
-#include "xTiled.hpp"
+#include "xtiled.hpp"
 
-#include "build.h"
+
+#include "../version_code.h"
+
+#define NAME "Xtiled"
+#define COMMAND_NAME "xtiled"
 
 bool verbose = false;
 
@@ -43,11 +45,11 @@ enum class MessageType {
 std::ostream& operator<<(std::ostream& os, MessageType type) {
     switch (type) {
         case MessageType::Error:
-            os << R"(\e[1;91mError\e[0m: )";
+            os << "❌ ";
             break;
 
         case MessageType::Warning:
-            os << R"(\e[1;93mWarning\e[0m: )";
+            os << "⚠️ ";
             break;
             
         case MessageType::Verbose:
@@ -62,89 +64,6 @@ std::ostream& operator<<(std::ostream& os, MessageType type) {
     return os;
 }
 
-/*
- The decimalToBase24 function converts a given 
- base 10 integer into its base 24 representation using a
- specific set of characters. The character set is
- comprised of the following 24 symbols:
-
-     •    Numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-     •    Letters: C, D, F, H, J, K, M, N, R, U, V, W, X, Y
-     
- Character Selection:
- The choice of characters was made to avoid confusion
- with common alphanumeric representations, ensuring
- that each character is visually distinct and easily
- recognizable. This set excludes characters that closely
- resemble each other or numerical digits, promoting
- clarity in representation.
- */
-static std::string decimalToBase24(int num) {
-    if (num == 0) {
-        return "C";
-    }
-
-    const std::string base24Chars = "0123456789CDFHJKMNRUVWXY";
-    std::string base24;
-
-    while (num > 0) {
-        int remainder = num % 24;
-        base24 = base24Chars[remainder] + base24; // Prepend character
-        num /= 24; // Integer division
-    }
-
-    return base24;
-}
-
-static std::string getBuildCode(void) {
-    std::string str;
-    int majorVersionNumber = BUILD_NUMBER / 100000;
-    str = std::to_string(majorVersionNumber) + decimalToBase24(BUILD_NUMBER - majorVersionNumber * 100000);
-    return str;
-}
-
-void help(void)
-{
-    int rev = BUILD_NUMBER / 1000 % 10;
-    
-    std::cout << "Copyright (C) 2024 Insoft. All rights reserved.\n";
-    std::cout << "Insoft xTiled version, " << BUILD_NUMBER / 100000 << "." << BUILD_NUMBER / 10000 % 10 << (rev ? "." + std::to_string(rev) : "")
-    << " (BUILD " << getBuildCode() << "-" << decimalToBase24(BUILD_DATE) << ")\n\n";
-    std::cout << "Usage: repix <input-file> [-o <output-file>] [-w <width>] [-h <height>] [-t <tilecount>] [-s <similarity>]\n\n";
-    std::cout << "Options:\n";
-    std::cout << "    -o  <output-file>        Specify the filename for Tiled file.\n";
-    std::cout << "    -w  <width>              Specify the width of the tiles used.\n";
-    std::cout << "    -h  <height>             Specify the height of the tiles used.\n";
-    std::cout << "    -c  <tilecount>          Specify the number of tiles used.\n";
-    std::cout << "    -s  <similarity>         Specify similarity percentage of tiles for matching.\n";
-    std::cout << "\n";
-    std::cout << "Additional Commands:\n";
-    std::cout << "  xtiled {-version | -help}\n";
-    std::cout << "    -version                 Display the version information.\n";
-    std::cout << "    -help                    Show this help message.\n";
-}
-
-void version(void) {
-    std::cout << "Copyright (C) 2024 Insoft. All rights reserved.\n";
-    std::cout << "Insoft xTiled version, " << BUILD_NUMBER / 100000 << "." << BUILD_NUMBER / 10000 % 10 << "." << BUILD_NUMBER / 1000 % 10
-    << " (BUILD " << getBuildCode() << ")\n";
-    std::cout << "Built on: " << CURRENT_DATE << "\n";
-    std::cout << "Licence: MIT License\n\n";
-    std::cout << "For more information, visit: http://www.insoft.uk\n";
-}
-
-void error(void)
-{
-    std::cout << "xtiled: try 'xtiled -help' for more information\n";
-    exit(0);
-}
-
-void info(void) {
-    std::cout << "Copyright (c) 2024 Insoft. All rights reserved.\n";
-    int rev = BUILD_NUMBER / 1000 % 10;
-    std::cout << "xTiled version, " << BUILD_NUMBER / 100000 << "." << BUILD_NUMBER / 10000 % 10 << (rev ? "." + std::to_string(rev) : "")
-    << " (BUILD " << getBuildCode() << "-" << decimalToBase24(BUILD_DATE) << ")\n\n";
-}
 
 bool fileExists(const std::string& filename) {
     std::ofstream outfile;
@@ -156,19 +75,83 @@ bool fileExists(const std::string& filename) {
     return true;
 }
 
-std::string removeExtension(const std::string& filename) {
-    // Find the last dot in the string
-    size_t lastDotPosition = filename.find_last_of('.');
 
-    // If there is no dot, return the original string
-    if (lastDotPosition == std::string::npos) {
-        return filename;
+// MARK: - Extensions
+
+namespace std::filesystem {
+    std::string expand_tilde(const std::string& path) {
+        if (!path.empty() && path.starts_with("~")) {
+#ifdef _WIN32
+            const char* home = std::getenv("USERPROFILE");
+#else
+            const char* home = std::getenv("HOME");
+#endif
+            
+            if (home) {
+                return std::string(home) + path.substr(1);  // Replace '~' with $HOME
+            }
+        }
+        return path;  // return as-is if no tilde or no HOME
     }
-
-    // Return the substring from the beginning up to the last dot
-    return filename.substr(0, lastDotPosition);
 }
 
+// MARK: - Command Line
+void version(void) {
+    using namespace std;
+    std::cout
+    << "Copyright (C) 2024-" << YEAR << " Insoft.\n"
+    << "Insoft "<< NAME << " version, " << VERSION_NUMBER << " (BUILD " << VERSION_CODE << ")\n"
+    << "Built on: " << DATE << "\n"
+    << "Licence: MIT License\n\n"
+    << "For more information, visit: http://www.insoft.uk\n";
+}
+
+void error(void) {
+    std::cout << COMMAND_NAME << ": try '" << COMMAND_NAME << " --help' for more information\n";
+    exit(0);
+}
+
+void info(void) {
+    using namespace std;
+    std::cout
+    << "          ***********     \n"
+    << "        ************      \n"
+    << "      ************        \n"
+    << "    ************  **      \n"
+    << "  ************  ******    \n"
+    << "************  **********  \n"
+    << "**********    ************\n"
+    << "************    **********\n"
+    << "  **********  ************\n"
+    << "    ******  ************  \n"
+    << "      **  ************    \n"
+    << "        ************      \n"
+    << "      ************        \n"
+    << "    ************          \n\n"
+    << "Copyright (C) 2024-" << YEAR << " Insoft.\n"
+    << "Insoft " << NAME << "\n\n";
+}
+
+void help(void) {
+    using namespace std;
+    std::cout
+    << "Copyright (C) 2024-" << YEAR << " Insoft.\n"
+    << "Insoft "<< NAME << " version, " << VERSION_NUMBER << " (BUILD " << VERSION_CODE << ")\n"
+    << "\n"
+    << "Usage: " << COMMAND_NAME << " <input-file> [-o <output-file>] [-w <width>] [-h <height>] [-t <tilecount>] [-s <similarity>]\n"
+    << "\n"
+    << "Options:\n"
+    << "  -o <output-file>        Specify the filename for generated tmj code.\n"
+    << "  -w  <width>             Specify the width of the tiles used.\n"
+    << "  -h  <height>            Specify the height of the tiles used.\n"
+    << "  -c  <tilecount>         Specify the number of tiles used.\n"
+    << "  -s  <similarity>        Specify similarity percentage of tiles for matching.\n"
+    << "\n"
+    << "Additional Commands:\n"
+    << "  " << COMMAND_NAME << " {--version | --help }\n"
+    << "    --version              Display the version information.\n"
+    << "    --help                 Show this help message.\n";
+}
 
 int main(int argc, const char * argv[])
 {
@@ -231,7 +214,12 @@ int main(int argc, const char * argv[])
             error();
             return 0;
         }
-        in_filename = argv[n];
+    
+        in_filename = std::filesystem::expand_tilde(argv[n]);
+    }
+    
+    if (std::filesystem::path(in_filename).parent_path().empty()) {
+        in_filename.insert(0, "./");
     }
     
     info();
@@ -242,7 +230,7 @@ int main(int argc, const char * argv[])
     }
     
     if (out_filename.empty() || out_filename == in_filename) {
-        out_filename = removeExtension(in_filename) + ".xml";
+        out_filename = std::filesystem::path(out_filename).replace_extension("");
     }
     
     xtiled.loadTiledImage(in_filename);

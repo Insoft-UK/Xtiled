@@ -1,3 +1,0 @@
-#define BUILD_NUMBER 100116
-#define CURRENT_DATE "2024 December 11"
-#define BUILD_DATE 20241211

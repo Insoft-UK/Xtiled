@@ -3,15 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		133669342BE82EA000484032 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 133669332BE82EA000484032 /* main.cpp */; };
 		133669432BE82F9100484032 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1336693F2BE82F9100484032 /* image.cpp */; };
+		13C68DA92EA090C200DE3846 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C68DA82EA090C200DE3846 /* libpng.a */; };
 		13E3DF562D053C5400E55F5F /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E3DF552D053C5400E55F5F /* libz.a */; };
-		13E3DF582D053C7400E55F5F /* libpng16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E3DF572D053C7400E55F5F /* libpng16.a */; };
-		13E3DF5B2D054AC400E55F5F /* xTiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13E3DF5A2D054AC400E55F5F /* xTiled.cpp */; };
+		13E3DF5B2D054AC400E55F5F /* xtiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13E3DF5A2D054AC400E55F5F /* xtiled.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,27 +27,30 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		130BEBC72CA340F700E921B4 /* build.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = build.h; sourceTree = "<group>"; };
 		133669302BE82EA000484032 /* xtiled */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xtiled; sourceTree = BUILT_PRODUCTS_DIR; };
 		133669332BE82EA000484032 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1336693A2BE82F4200484032 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1336693F2BE82F9100484032 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
-		133669402BE82F9100484032 /* build.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = build.txt; sourceTree = "<group>"; };
 		133669412BE82F9100484032 /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
 		138F54E22CA0E72B009357F9 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		138F54E32CA0E7B3009357F9 /* examples */ = {isa = PBXFileReference; lastKnownFileType = folder; path = examples; sourceTree = "<group>"; };
+		13C68DA82EA090C200DE3846 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = src/libpng/lib/arm64/libpng.a; sourceTree = "<group>"; };
 		13E3DF552D053C5400E55F5F /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = ../../../../opt/homebrew/Cellar/zlib/1.3.1/lib/libz.a; sourceTree = "<group>"; };
-		13E3DF572D053C7400E55F5F /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = ../../../../opt/homebrew/Cellar/libpng/1.6.44/lib/libpng16.a; sourceTree = "<group>"; };
-		13E3DF592D054AC400E55F5F /* xTiled.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = xTiled.hpp; sourceTree = "<group>"; };
-		13E3DF5A2D054AC400E55F5F /* xTiled.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = xTiled.cpp; sourceTree = "<group>"; };
+		13E3DF592D054AC400E55F5F /* xtiled.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = xtiled.hpp; sourceTree = "<group>"; };
+		13E3DF5A2D054AC400E55F5F /* xtiled.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = xtiled.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		13C68DB42EA0922200DE3846 /* libpng */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = libpng; sourceTree = "<group>"; };
+		13C68DBD2EA0922200DE3846 /* libz */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = libz; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1336692D2BE82EA000484032 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13E3DF582D053C7400E55F5F /* libpng16.a in Frameworks */,
+				13C68DA92EA090C200DE3846 /* libpng.a in Frameworks */,
 				13E3DF562D053C5400E55F5F /* libz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,13 +81,13 @@
 		133669322BE82EA000484032 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				13C68DB42EA0922200DE3846 /* libpng */,
+				13C68DBD2EA0922200DE3846 /* libz */,
 				133669332BE82EA000484032 /* main.cpp */,
 				133669412BE82F9100484032 /* image.hpp */,
 				1336693F2BE82F9100484032 /* image.cpp */,
-				130BEBC72CA340F700E921B4 /* build.h */,
-				133669402BE82F9100484032 /* build.txt */,
-				13E3DF592D054AC400E55F5F /* xTiled.hpp */,
-				13E3DF5A2D054AC400E55F5F /* xTiled.cpp */,
+				13E3DF592D054AC400E55F5F /* xtiled.hpp */,
+				13E3DF5A2D054AC400E55F5F /* xtiled.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -92,7 +95,7 @@
 		13592CFE2CC07A600052D0E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				13E3DF572D053C7400E55F5F /* libpng16.a */,
+				13C68DA82EA090C200DE3846 /* libpng.a */,
 				13E3DF552D053C5400E55F5F /* libz.a */,
 			);
 			name = Frameworks;
@@ -113,6 +116,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				13C68DB42EA0922200DE3846 /* libpng */,
+				13C68DBD2EA0922200DE3846 /* libz */,
 			);
 			name = xtiled;
 			productName = piXsprite;
@@ -178,7 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				133669342BE82EA000484032 /* main.cpp in Sources */,
-				13E3DF5B2D054AC400E55F5F /* xTiled.cpp in Sources */,
+				13E3DF5B2D054AC400E55F5F /* xtiled.cpp in Sources */,
 				133669432BE82F9100484032 /* image.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +328,10 @@
 					/usr/local/zlib/lib,
 					/opt/homebrew/Cellar/zlib/1.3.1/lib,
 					/opt/homebrew/Cellar/libpng/1.6.44/lib,
+					"$(PROJECT_DIR)/src/libpng/lib/arm64",
+					"$(PROJECT_DIR)/src/libz/lib/x86_64",
+					"$(PROJECT_DIR)/src/libpng/lib/x86_64",
+					"$(PROJECT_DIR)/src/libz/lib/arm64",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -345,6 +356,10 @@
 					/usr/local/zlib/lib,
 					/opt/homebrew/Cellar/zlib/1.3.1/lib,
 					/opt/homebrew/Cellar/libpng/1.6.44/lib,
+					"$(PROJECT_DIR)/src/libpng/lib/arm64",
+					"$(PROJECT_DIR)/src/libz/lib/x86_64",
+					"$(PROJECT_DIR)/src/libpng/lib/x86_64",
+					"$(PROJECT_DIR)/src/libz/lib/arm64",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

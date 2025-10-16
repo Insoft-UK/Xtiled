@@ -1,28 +1,26 @@
-/*
- The MIT License (MIT)
- 
- Copyright (c) 2024 Insoft. All rights reserved.
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
+// The MIT License (MIT)
+//
+// Copyright (c) 2024-2025 Insoft.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
-#include "xTiled.hpp"
+#include "xtiled.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -34,18 +32,6 @@
 
 static int* arr;
 
-static std::string removeExtension(const std::string& filename) {
-    // Find the last dot in the string
-    size_t lastDotPosition = filename.find_last_of('.');
-
-    // If there is no dot, return the original string
-    if (lastDotPosition == std::string::npos) {
-        return filename;
-    }
-
-    // Return the substring from the beginning up to the last dot
-    return filename.substr(0, lastDotPosition);
-}
 
 static std::string removePath(const std::string& filename) {
     // Find the last dot in the string
@@ -104,7 +90,7 @@ void xTiled::createTMJFile(std::string& filename) {
     
     
     if (_tileset != nullptr) {
-        saveImageAsPNGFile(_tileset, removeExtension(filename) + ".png");
+        saveImageAsPNGFile(_tileset, std::filesystem::path(filename).replace_extension("png"));
     }
     
     std::string tmj = R"({ 
@@ -155,8 +141,9 @@ void xTiled::createTMJFile(std::string& filename) {
     "width":@width
 })";
     
-    tmj = regex_replace(tmj, std::regex(R"(@image)"), removePath(removeExtension(filename)) + ".png");
-    tmj = regex_replace(tmj, std::regex(R"(@name)"), removePath(removeExtension(filename)));
+    std::string name = std::filesystem::path(filename).stem();
+    tmj = regex_replace(tmj, std::regex(R"(@image)"), name.append(".png"));
+    tmj = regex_replace(tmj, std::regex(R"(@name)"), name);
     
     
     tmj = regex_replace(tmj, std::regex(R"(@width)"), std::to_string(_tiledImage->width / tileWidth));
@@ -188,14 +175,15 @@ void xTiled::createTMJFile(std::string& filename) {
     data.resize(data.length() - 2);
     tmj = regex_replace(tmj, std::regex(R"(@layers\.data)"), data);
     
-    
-    outfile.open(removeExtension(filename) + ".tmj", std::ios::out | std::ios::binary);
+    outfile.open(std::filesystem::path(filename).replace_extension("tmj"), std::ios::out | std::ios::binary);
     if (outfile.is_open()) {
         outfile.write(tmj.c_str(), tmj.length());
         outfile.close();
     }
     
     delete [] arr;
+    
+    std::cout << "✅ TMJ file saved successfully: " << std::filesystem::path(filename).replace_extension("tmj") << std::endl;
 }
 
 void xTiled::generateTMJData(void) {
