@@ -24,6 +24,7 @@
 
 #include <fstream>
 #include <cstring>
+#include <vector>
 #include "png.h"
 
 
@@ -727,6 +728,7 @@ float compareSubImageSimilarity(const TImage* imageA, int x, int y, const TImage
     
     return similarityPercentage;
 }
+
 
 
 

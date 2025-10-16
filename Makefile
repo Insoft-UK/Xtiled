@@ -4,7 +4,7 @@ SRC := src
 ARCH := $(shell arch)
 
 LIB :=
-CFLAGS := -std=c++20
+CFLAGS := -std=c++23
 
 all: arm64 x86_64
  
