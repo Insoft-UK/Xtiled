@@ -108,7 +108,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 133669372BE82EA000484032 /* Build configuration list for PBXNativeTarget "xtiled" */;
 			buildPhases = (
-				13EE0F3D2BE82FD6000FF54A /* ShellScript */,
 				1336692C2BE82EA000484032 /* Sources */,
 				1336692D2BE82EA000484032 /* Frameworks */,
 				1336692E2BE82EA000484032 /* CopyFiles */,
@@ -157,27 +156,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		13EE0F3D2BE82FD6000FF54A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Increment version number by 0.001, allowing 1000 builds before version number is increased.\nbuild=( $(cat src/build.txt) )\nbuild=$(($build+1))\ncurrent_date=$(date +\"%Y %B %d\")\nbuild_date=$(date +\"%Y%m%d\")\necho $build > src/build.txt\necho \"#define BUILD_NUMBER $build\" > src/build.h\necho \"#define CURRENT_DATE \\\"$current_date\\\"\" >> src/build.h\necho \"#define BUILD_DATE $build_date\" >> src/build.h\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1336692C2BE82EA000484032 /* Sources */ = {
